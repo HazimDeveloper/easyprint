@@ -1,0 +1,39 @@
+.main .main_content{
+    margin-top: 60px;  /* Adjust for the header height */
+    margin-bottom: 60px; /* Adjust for the footer height */
+    height: calc(100vh - 120px); /* Remaining height of the screen */
+    overflow-y: auto;  /* Vertical scrolling if content overflows */
+    padding: 20px; 
+}
+
+.main_content .text{
+    font-size: 14px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    color: var(--text-color-light);
+}
+
+.main_content .card{
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+span.badge{
+    background-color: var(--bg-green-color);
+    color: var(--text-green-color);
+    font-size: 13px;
+}
+
+thead.thead-color tr th{
+    background-color: var(--thead-color);
+    color: var(--text-color-light);
+    font-size: 15px;
+}
+
+tbody.tbody-color tr td{
+    color: var(--text-color-light);
+    font-size: 14px;
+}

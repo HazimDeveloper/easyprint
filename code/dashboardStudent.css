@@ -1,0 +1,33 @@
+
+span.material-symbols-outlined.id-icon {
+    background-color: #cfe1fb;
+    border-radius: 10px;
+    padding: 10px;
+    color: #0b5ed7;
+}
+
+span.material-symbols-outlined.balance-icon {
+    background-color: #e2f9dc;
+    border-radius: 10px;
+    padding: 10px;
+    color: #3e8b40;
+}
+
+span.material-symbols-outlined.points-icon {
+    background-color: #ffe0e1;
+    border-radius: 10px;
+    padding: 10px;
+    color: #9b414b;
+}
+
+span.material-symbols-outlined.status-icon {
+    background-color: #fffce0;
+    border-radius: 10px;
+    padding: 10px;
+    color: #9b9441;
+}
+
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
