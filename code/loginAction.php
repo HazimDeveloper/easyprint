@@ -21,18 +21,20 @@ if (isset($_POST['signIn'])) {
         // ✅ If student, check/create customer record
         if ($user['role'] === 'Student') {
             $userID = $user['userID'];
-            $studentID = $user['studentID'] ?? ''; // Make sure this exists in user table
-            $name = $user['username']; // Or use $user['name'] if you have it
+            $studentID = $user['studentID'] ?? ('STU' . rand(1000, 9999)); // Generate if missing
+            $name = $user['username']; // Use username as name
 
             // Check if a customer record already exists
             $checkQuery = "SELECT * FROM customer WHERE userID = '$userID'";
             $checkResult = mysqli_query($conn, $checkQuery);
 
             if (mysqli_num_rows($checkResult) === 0) {
-                // Insert new customer record
-                $insertQuery = "INSERT INTO customer (userID, studentID, name, verificationStatus) 
-                                VALUES ('$userID', '$studentID', '$name', 'Pending')";
-                mysqli_query($conn, $insertQuery);
+                // Insert new customer record with proper default values
+                $insertQuery = "INSERT INTO customer (userID, studentID, name, verificationStatus, membershipPoints, easyPayBalance) 
+                                VALUES ('$userID', '$studentID', '$name', 'Pending', 0, 0.00)";
+                if (!mysqli_query($conn, $insertQuery)) {
+                    error_log("Failed to create customer record: " . mysqli_error($conn));
+                }
             }
 
             header("Location: dashboardStudent.php");

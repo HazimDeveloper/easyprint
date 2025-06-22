@@ -17,6 +17,12 @@ mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 $user = mysqli_fetch_assoc($result);
 
+// Check if user exists
+if (!$user) {
+    echo "User not found.";
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $email = $_POST['email'];
@@ -66,15 +72,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form action="" method="POST">
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" name="username" value="<?php echo htmlspecialchars($user['username']); ?>" required>
+                <input type="text" class="form-control" id="username" name="username" value="<?php echo htmlspecialchars($user['username'] ?? ''); ?>" required>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
+                <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($user['email'] ?? ''); ?>" required>
             </div>
             <div class="mb-3">
                 <label for="contactNum" class="form-label">Contact Number</label>
-                <input type="text" class="form-control" id="contactNum" name="contactNum" value="<?php echo htmlspecialchars($user['contactNum']); ?>" required>
+                <input type="text" class="form-control" id="contactNum" name="contactNum" value="<?php echo htmlspecialchars($user['contactNum'] ?? ''); ?>" required>
             </div>
             <button type="submit" class="btn btn-primary">Update Profile</button>
         </form>

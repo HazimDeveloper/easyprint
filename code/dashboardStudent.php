@@ -175,8 +175,15 @@ $orderResult = mysqli_query($conn, $orderQuery);
 <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 
 <script>
-    $(document).ready(function () {
-        $('#studentOrders').DataTable({ pageLength: 5 });
+  $(document).ready(function () {
+        // Initialize DataTable only once
+        if (!$.fn.DataTable.isDataTable('#studentOrders')) {
+            $('#studentOrders').DataTable({ 
+                pageLength: 5,
+                lengthMenu: [5, 10, 15, 20],
+                responsive: true
+            });
+        }
 
         $('#topupForm').on('submit', function (e) {
             e.preventDefault();
@@ -185,7 +192,7 @@ $orderResult = mysqli_query($conn, $orderQuery);
             const method = $('#method').val();
 
             $.ajax({
-                url: 'topupHandler.php', // Because it's in the same folder as dashboardStudent.php
+                url: 'topupHandler.php',
                 method: 'POST',
                 data: {
                     topupAmount: amount,
@@ -194,9 +201,9 @@ $orderResult = mysqli_query($conn, $orderQuery);
                 success: function (response) {
                     if (response.status === 'success') {
                         alert(response.message);
-                        $('#walletBalance').text('RM ' + response.newBalance); // Update balance text
+                        $('#walletBalance').text('RM ' + response.newBalance);
                         $('#topupModal').modal('hide');
-                        $('#topupForm')[0].reset(); // Optional: reset the form
+                        $('#topupForm')[0].reset();
                     } else {
                         alert(response.message);
                     }
@@ -209,10 +216,5 @@ $orderResult = mysqli_query($conn, $orderQuery);
     });
 </script>
 
-<script>
-    $(document).ready(function () {
-        $('#studentOrders').DataTable({ pageLength: 5 });
-    });
-</script>
 </body>
 </html>

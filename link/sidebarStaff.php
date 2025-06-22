@@ -16,7 +16,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <li class="<?= ($current_page == 'dashboardStaff.php') ? 'active' : '' ?>">
                 <a href="../code/dashboardStaff.php">
                     <i class="material-symbols-outlined">dashboard</i>
-                    <span class="link_name">Dashbaord</span>
+                    <span class="link_name">Dashboard</span>
                 </a>
             </li>
             <li class="<?= ($current_page == 'packageManagement.php') ? 'active' : '' ?>">

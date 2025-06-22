@@ -123,17 +123,21 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['role'] != 'Staff') {
                         <div>
                             <h6 class="card-subtitle mb-2">Total Sales</h6>
                             <?php
-                            $sql = "SELECT SUM(payment.amountPaid) AS totalSales 
+                            // Fixed query - using correct column name 'amount' instead of 'amountPaid'
+                            $sql = "SELECT SUM(payment.amount) AS totalSales 
                             FROM payment
-                            JOIN invoice ON payment.paymentID = invoice.paymentID 
-                            JOIN `order` ON invoice.orderID = `order`.orderID
+                            JOIN `order` ON payment.orderID = `order`.orderID
                             WHERE `order`.orderStatus = 'Completed'";
 
                             $query = mysqli_query($conn, $sql);
-                            $result = mysqli_fetch_assoc($query);
-                            $totalSales = $result['totalSales'];
-
-                            echo '<h3 class="card-title"> RM ' . $totalSales . '</h3>';
+                            if ($query) {
+                                $result = mysqli_fetch_assoc($query);
+                                $totalSales = $result['totalSales'] ?? 0;
+                                echo '<h3 class="card-title"> RM ' . number_format($totalSales, 2) . '</h3>';
+                            } else {
+                                echo '<h3 class="card-title"> RM 0.00</h3>';
+                                echo '<div class="text-danger">Error: ' . mysqli_error($conn) . '</div>';
+                            }
                             ?>
                         </div>
 
@@ -149,7 +153,16 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['role'] != 'Staff') {
                         <span>Package Sales</span>
                     </div>
                     <div class="card">
-                        <?php include 'chartBar_PackageSales.php'; ?>
+                        <?php 
+                        if (file_exists('chartBar_PackageSales.php')) {
+                            include 'chartBar_PackageSales.php'; 
+                        } else {
+                            echo '<div class="card-body text-center">
+                                    <p class="text-muted">Package Sales Chart</p>
+                                    <small>Chart feature coming soon...</small>
+                                  </div>';
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
@@ -160,7 +173,16 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['role'] != 'Staff') {
                         <span>Daily Sales</span>
                     </div>
                     <div class="card">
-                        <?php include 'chartLine_DailySales.php'; ?>
+                        <?php 
+                        if (file_exists('chartLine_DailySales.php')) {
+                            include 'chartLine_DailySales.php'; 
+                        } else {
+                            echo '<div class="card-body text-center">
+                                    <p class="text-muted">Daily Sales Chart</p>
+                                    <small>Chart feature coming soon...</small>
+                                  </div>';
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
